@@ -1,3 +1,6 @@
+import org.firmata.*;
+import cc.arduino.*;
+
 /* OpenProcessing Tweak of *@*http://www.openprocessing.org/sketch/77167*@* */
 /* !do not delete the line above, required for linking your tweak if you upload again */
 //NOTE: currently this game can be played with a
