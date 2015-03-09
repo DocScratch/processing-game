@@ -15,12 +15,13 @@ import cc.arduino.*;
 //If you want to play with a connected Arduino,
 //uncomment that code. Applies on this tab and the 'you' tab.
 
-//-->import processing.serial.*; //Load the library to read
+import processing.serial.*; //Load the library to read
 //information from the serial port. In this case we will
 //load data from an Arduino. See the "arduino_code" tab.
 
 PFont font; //Declare a font.
-//-->Serial myPort; //Declare a serial port.
+Serial myPort; //Declare a serial port.
+Arduino arduino;
 
 int [] copiedValues = new int[2]; //Make an array to store
 //the values we get from the Arduino. This is necessary so
@@ -52,17 +53,18 @@ void setup() {
   copiedValues[1] = 1; //'1' for the pushbutton
   //means the button isn't pressed.
 
-  //println(Serial.list()); //Uncomment this line
+  println(Serial.list()); //Uncomment this line
   //to see a list of the serial ports and determine
   //which one the Arduino is plugged into. We need
   //that to know which port number to put in the
   //brackets in the next line of code.
   
-  //-->myPort = new Serial(this, Serial.list()[4], 9600);
+ //myPort = new Serial(this, Serial.list[6], 9600);
+   arduino = new Arduino(this, Arduino.list()[0], 57600);
   //The above opens the serial port, communicating at
   //the same rate as we set in the code for Arduino.
   
-  //-->myPort.bufferUntil('\n'); //I don't totally get this,
+ // myPort.bufferUntil('\n'); //I don't totally get this,
   //but I think from the way Francisco explained it that
   //we're using the line break character to separate out
   //each reading from Arduino into discrete chunks so we
@@ -96,7 +98,7 @@ void draw() {
   //the object's width in the mapping.
   mappedValue = map(copiedValues[0], 0, 1023, 0, width-meYou.wide);
 
-/*-->
+
   if (copiedValues[1] == 0) { //If player pressed the button
     if (gameState == 0) { //If it's the title screen
       gameState = 1; //Move to the game play screen.
@@ -108,7 +110,7 @@ void draw() {
   else {
     shoot = false; //Otherwise disable shooting.
   }
-  */
+  
   if (gameState == 0) { //If it's the title screen
     background(0);
     textFont(font, 48);
@@ -178,7 +180,7 @@ void keyPressed() {// we need the arduino to be recognized
   if (keyCode==RIGHT) {
     goRight = true;
   }
-  if (key==' ') { //Space bar.//add arduino.digitalRead
+  if (arduino.digitalRead(3) == arduino.HIGH) { //Space bar.//add arduino.digitalRead
     shoot = true;
   }
 
@@ -204,8 +206,11 @@ void keyReleased() {
   if (keyCode==RIGHT) {
     goRight = false;
   }
-  if (key==' ') {// add arduino.digitalRead
-    shoot = false;
+  //if (key==' ') {// add arduino.digitalRead
+  //  shoot = false;
+  //}
+  if (arduino.digitalRead(3) == arduino.LOW) {
+     shoot = false; 
   }
 }
 
