@@ -168,14 +168,14 @@ void draw() {
 //updating the position of the object. This makes movement smoother
 //and allows Processing to recognize multiple button presses at once.
 //Once again I am indebted to Ramiro Corbetta for suggesting this method.
-void keyPressed() {
+void keyPressed() {// we need the arduino to be recognized 
   if (keyCode==LEFT) {
     goLeft = true;
   }
   if (keyCode==RIGHT) {
     goRight = true;
   }
-  if (key==' ') { //Space bar.
+  if (key==' ') { //Space bar.//add arduino.digitalRead
     shoot = true;
   }
 
@@ -201,7 +201,7 @@ void keyReleased() {
   if (keyCode==RIGHT) {
     goRight = false;
   }
-  if (key==' ') {
+  if (key==' ') {// add arduino.digitalRead
     shoot = false;
   }
 }
